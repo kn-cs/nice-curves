@@ -1,8 +1,8 @@
 # Implementation of the nice curve M[4698]
 
-# Implementation name		: 	intel64-64-maax
-# Reference instructions	: 	mulx/adcx/adox
-# Scalarmult cpu-cycles		: 	Skylake - 92250, Kaby Lake - 88882
+Implementation name		: 	intel64-64-maax
+Reference instructions	: 	mulx/adcx/adox
+Scalarmult cpu-cycles	: 	Skylake - 92250, Kaby Lake - 88882
 
 This implementation corresponds to the paper "Nice curves" authored by
 
