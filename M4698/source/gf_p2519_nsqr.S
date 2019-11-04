@@ -37,7 +37,7 @@
 */
 
 .p2align 5
-.global gfp2519nsqr
+.globl gfp2519nsqr
 gfp2519nsqr:
 
 push    %rbp
