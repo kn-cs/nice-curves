@@ -31,7 +31,7 @@
 | NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,   |
 | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY       |
 | THEORY LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING |
-| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,| 
+| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,|
 | EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                          |
 +-----------------------------------------------------------------------------+
 */
@@ -74,7 +74,7 @@ movq	%r8, 112(%rsp)
 movq	%r8, 280(%rsp)
 movq	48(%rsi), %r8
 movq	%r8, 120(%rsp)
-movq	%r8, 288(%rsp)  // X1 = XP, X3 = XP
+movq	%r8, 288(%rsp)  ;// X1 = XP, X3 = XP
 
 movq	$1, 128(%rsp)
 movq	$0, 136(%rsp)
@@ -82,7 +82,7 @@ movq	$0, 144(%rsp)
 movq	$0, 152(%rsp)
 movq	$0, 160(%rsp)
 movq	$0, 168(%rsp)
-movq	$0, 176(%rsp)  // X2 = 1
+movq	$0, 176(%rsp) ; // X2 = 1
 
 movq	$0, 184(%rsp)
 movq	$0, 192(%rsp)
@@ -90,7 +90,7 @@ movq	$0, 200(%rsp)
 movq	$0, 208(%rsp)
 movq	$0, 216(%rsp)
 movq	$0, 224(%rsp)
-movq	$0, 232(%rsp)  // Z2 = 0
+movq	$0, 232(%rsp);  // Z2 = 0
 
 movq	$1, 296(%rsp)
 movq	$0, 304(%rsp)
@@ -98,26 +98,26 @@ movq	$0, 312(%rsp)
 movq	$0, 320(%rsp)
 movq	$0, 328(%rsp)
 movq	$0, 336(%rsp)
-movq	$0, 344(%rsp) // Z3 = 1
+movq	$0, 344(%rsp) ;// Z3 = 1
 
-// X1: rsp(72)-rsp(120),  
-// X2: rsp(136)-rsp(192), Z2: rsp(200)-rsp(256),
-// X3: rsp(264)-rsp(320), Z3: rsp(328)-rsp(384).
+;// X1: rsp(72)-rsp(120),
+;// X2: rsp(136)-rsp(192), Z2: rsp(200)-rsp(256),
+;// X3: rsp(264)-rsp(320), Z3: rsp(328)-rsp(384).
 
-leaq	128(%rsp), %r11  // &X2
-leaq	184(%rsp), %r12  // &Z2
-leaq	240(%rsp), %r13  // &X3
-leaq	296(%rsp), %r14  // &Z3
+leaq	128(%rsp), %r11  ;// &X2
+leaq	184(%rsp), %r12  ;// &Z2
+leaq	240(%rsp), %r13  ;// &X3
+leaq	296(%rsp), %r14  ;// &Z3
 
-movq	%r11, 352(%rsp)  // &X2
-movq	%r12, 360(%rsp)  // &Z2
-movq	%r13, 368(%rsp)  // &X3
-movq	%r14, 376(%rsp)  // &Z3
+movq	%r11, 352(%rsp) ; // &X2
+movq	%r12, 360(%rsp) ; // &Z2
+movq	%r13, 368(%rsp) ; // &X3
+movq	%r14, 376(%rsp) ; // &Z3
 
-movq	%r13, 384(%rsp)  // &X3
-movq	%r14, 392(%rsp)  // &Z3
-movq	%r11, 400(%rsp)  // &X2
-movq	%r12, 408(%rsp)  // &Z2
+movq	%r13, 384(%rsp)  ;// &X3
+movq	%r14, 392(%rsp)  ;// &Z3
+movq	%r11, 400(%rsp)  ;// &X2
+movq	%r12, 408(%rsp)  ;// &Z2
 
 movq    $55, 424(%rsp)
 movb	$3, 416(%rsp)
@@ -125,7 +125,7 @@ movq    %rdx, 64(%rsp)
 
 movq    %rdx, %rax
 
-// Montgomery ladder loop
+;// Montgomery ladder loop
 
 .L1:
 addq    424(%rsp), %rax
@@ -136,7 +136,7 @@ movb    %r14b, 418(%rsp)
 movb	416(%rsp), %cl
 movb	418(%rsp), %bl
 shrb    %cl, %bl
-andb    $1, %bl    	// %bl = bit
+andb    $1, %bl    ;	// %bl = bit
 
 leaq    352(%rsp), %rdx
 leaq    384(%rsp), %rax
@@ -144,7 +144,7 @@ cmpb    $1, %bl
 cmove   %rax, %rdx
 movq    %rdx, 432(%rsp)
 
-/* 
+/*
  * Montgomery ladder step
  *
  * T1 <- X2 + Z2
@@ -171,7 +171,7 @@ movq    %rdx, 432(%rsp)
 // X2
 movq    0(%rdx), %rcx
 
-movq    0(%rcx),   %r8  
+movq    0(%rcx),   %r8
 movq    8(%rcx),   %r9
 movq    16(%rcx), %r10
 movq    24(%rcx), %r11
@@ -210,13 +210,13 @@ movq    0(%rdx), %rcx
 movq    48(%rcx), %r8
 
 // T2 <- X2 - Z2
-addq    _4p0,   %rax
-adcq    _4p1_5, %rbx
-adcq    _4p1_5, %rbp
-adcq    _4p1_5, %rsi
-adcq    _4p1_5, %rdi
-adcq    _4p1_5, %r15
-adcq    _4p6,   %r8
+addq    _4p0(%rip),   %rax
+adcq    _4p1_5(%rip), %rbx
+adcq    _4p1_5(%rip), %rbp
+adcq    _4p1_5(%rip), %rsi
+adcq    _4p1_5(%rip), %rdi
+adcq    _4p1_5(%rip), %r15
+adcq    _4p6(%rip),   %r8
 
 movq    8(%rdx),  %rcx
 subq    0(%rcx),  %rax
@@ -227,7 +227,7 @@ sbbq    32(%rcx), %rdi
 sbbq    40(%rcx), %r15
 sbbq    48(%rcx), %r8
 
-movq    %rax, 496(%rsp) // T2
+movq    %rax, 496(%rsp); // T2
 movq    %rbx, 504(%rsp)
 movq    %rbp, 512(%rsp)
 movq    %rsi, 520(%rsp)
@@ -254,7 +254,7 @@ movq    %r11, %rsi
 movq    %r12, %rdi
 movq    %r13, %r15
 
-movq    24(%rdx),  %rcx	
+movq    24(%rdx),  %rcx
 
 // T3 <- X3 + Z3
 addq    0(%rcx),  %r8
@@ -277,13 +277,13 @@ movq    16(%rdx), %rcx
 movq    48(%rcx), %r8
 
 // T4 <- X3 - Z3
-addq    _4p0,   %rax
-adcq    _4p1_5, %rbx
-adcq    _4p1_5, %rbp
-adcq    _4p1_5, %rsi
-adcq    _4p1_5, %rdi
-adcq    _4p1_5, %r15
-adcq    _4p6,   %r8
+addq    _4p0(%rip),   %rax
+adcq    _4p1_5(%rip), %rbx
+adcq    _4p1_5(%rip), %rbp
+adcq    _4p1_5(%rip), %rsi
+adcq    _4p1_5(%rip), %rdi
+adcq    _4p1_5(%rip), %r15
+adcq    _4p6(%rip),   %r8
 
 movq    24(%rdx), %rcx
 subq    0(%rcx),  %rax
@@ -305,7 +305,7 @@ movq    %r8,  656(%rsp)
 // T5 <- T1^2
 movq    440(%rsp), %rdx
 xorq    %r8, %r8
-    
+
 mulx    448(%rsp), %r9, %r10
 
 mulx    456(%rsp), %rcx, %r11
@@ -323,10 +323,10 @@ adcx    %rcx, %r13
 mulx    488(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcx    %r8, %r15
-    
+
 movq    448(%rsp), %rdx
 xorq    %rdi, %rdi
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -347,7 +347,7 @@ mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %r8
 adcx    %rdi, %r8
-    
+
 movq    456(%rsp), %rdx
 xorq    %rbx, %rbx
 
@@ -419,11 +419,11 @@ shld    $1, %r12, %r13
 shld    $1, %rdx, %r12
 shld    $1, %r10, %rdx
 shld    $1, %r9,  %r10
-shlq    $1, %r9 
+shlq    $1, %r9
 
-movq    %rdx, 776(%rsp)		
+movq    %rdx, 776(%rsp)
 movq    %r12, 784(%rsp)
-	  
+
 xorq    %rdx, %rdx
 movq    440(%rsp), %rdx
 mulx    %rdx, %r12, %rax
@@ -461,13 +461,13 @@ mulx    %rdx, %rcx, %rax
 adcx    %rcx, %rsi
 adcx    %rax, %rbp
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rax, %rax
-mulx    %r15, %rax, %r15 
+mulx    %r15, %rax, %r15
 
 mulx    %r8,  %rcx, %r8
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %r8
@@ -494,9 +494,9 @@ adcq    784(%rsp), %rbx
 adcq    %r13, %r11
 adcq    %rsi, %r14
 adcq    %rdx, %rcx
-   
+
 shld    $4, %r14, %rcx
-andq    mask60, %r14
+andq    mask60(%rip), %r14
 
 imul    $17, %rcx, %rcx
 addq    %rcx, %rax
@@ -518,7 +518,7 @@ movq    %r14, 712(%rsp)
 // T6 <- T2^2
 movq    496(%rsp), %rdx
 xorq    %r8, %r8
-    
+
 mulx    504(%rsp), %r9, %r10
 
 mulx    512(%rsp), %rcx, %r11
@@ -536,10 +536,10 @@ adcx    %rcx, %r13
 mulx    544(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcx    %r8, %r15
-    
+
 movq    504(%rsp), %rdx
 xorq    %rdi, %rdi
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -560,7 +560,7 @@ mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %r8
 adcx    %rdi, %r8
-    
+
 movq    512(%rsp), %rdx
 xorq    %rbx, %rbx
 
@@ -632,11 +632,11 @@ shld    $1, %r12, %r13
 shld    $1, %rdx, %r12
 shld    $1, %r10, %rdx
 shld    $1, %r9,  %r10
-shlq    $1, %r9 
+shlq    $1, %r9
 
-movq    %rdx, 776(%rsp)		
+movq    %rdx, 776(%rsp)
 movq    %r12, 784(%rsp)
-	  
+
 xorq    %rdx, %rdx
 movq    496(%rsp), %rdx
 mulx    %rdx, %r12, %rax
@@ -674,13 +674,13 @@ mulx    %rdx, %rcx, %rax
 adcx    %rcx, %rsi
 adcx    %rax, %rbp
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rax, %rax
-mulx    %r15, %rax, %r15 
+mulx    %r15, %rax, %r15
 
 mulx    %r8,  %rcx, %r8
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %r8
@@ -707,9 +707,9 @@ adcq    784(%rsp), %rbx
 adcq    %r13, %r11
 adcq    %rsi, %r14
 adcq    %rdx, %rcx
-   
+
 shld    $4, %r14, %rcx
-andq    mask60, %r14
+andq    mask60(%rip), %r14
 
 imul    $17, %rcx, %rcx
 addq    %rcx, %rax
@@ -730,39 +730,39 @@ movq    %r14, 768(%rsp)
 
 // T1 <- T1 · T4
 xorq    %rdx, %rdx
-movq    552(%rsp), %rdx    
+movq    552(%rsp), %rdx
 
 mulx    496(%rsp), %r8, %r9
-mulx    504(%rsp), %rcx, %r10		
-adcx    %rcx, %r9 
+mulx    504(%rsp), %rcx, %r10
+adcx    %rcx, %r9
 
-mulx    512(%rsp), %rcx, %r11	
+mulx    512(%rsp), %rcx, %r11
 adcx    %rcx, %r10
 
-mulx    520(%rsp), %rcx, %r12	
+mulx    520(%rsp), %rcx, %r12
 adcx    %rcx, %r11
 
-mulx    528(%rsp), %rcx, %r13	
+mulx    528(%rsp), %rcx, %r13
 adcx    %rcx, %r12
 
-mulx    536(%rsp), %rcx, %r14	
+mulx    536(%rsp), %rcx, %r14
 adcx    %rcx, %r13
 
-mulx    544(%rsp), %rcx, %r15	
+mulx    544(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcq    $0, %r15
 
 xorq    %rsi, %rsi
 movq    560(%rsp), %rdx
-   
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r9
 adox    %rbp, %r10
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -782,19 +782,19 @@ adox    %rbp, %r15
 mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-adcq    $0, %rsi		
+adcq    $0, %rsi
 
 xorq    %rbx, %rbx
 movq    568(%rsp), %rdx
-    
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
@@ -814,21 +814,21 @@ adox    %rbp, %rsi
 mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
-adcq    $0, %rbx		
+adcq    $0, %rbx
 
 movq    %r10, 776(%rsp)
 
 xorq    %r10, %r10
 movq    576(%rsp), %rdx
-    
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
@@ -847,22 +847,22 @@ adox    %rbp, %rbx
 
 mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %rbx
-adox    %rbp, %r10		
-adcq    $0, %r10			
+adox    %rbp, %r10
+adcq    $0, %r10
 
 movq    %r11, 784(%rsp)
 
 xorq    %r11, %r11
 movq    584(%rsp), %rdx
-    
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
@@ -881,20 +881,20 @@ adox    %rbp, %r10
 
 mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
-adox    %rbp, %r11		
+adox    %rbp, %r11
 adcq    $0, %r11
 
 xorq    %rax, %rax
 movq    592(%rsp), %rdx
-    
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
@@ -913,20 +913,20 @@ adox    %rbp, %r11
 
 mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
-adox    %rbp, %rax			
+adox    %rbp, %rax
 adcq    $0, %rax
 
 xorq    %rdi, %rdi
 movq    600(%rsp), %rdx
-    
+
 mulx    496(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    504(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
@@ -948,13 +948,13 @@ adcx    %rcx, %rax
 adox    %rbp, %rdi
 adcq    $0, %rdi
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rbp, %rbp
-mulx    %r15, %rbp, %r15 
+mulx    %r15, %rbp, %r15
 
 mulx    %rsi,  %rcx, %rsi
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rbx, %rcx, %rbx
 adcx    %rcx, %rsi
@@ -971,7 +971,7 @@ adcx    %rcx, %r11
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %rax
 adcq    $0, %rdi
-  
+
 xorq    %rdx, %rdx
 addq    %r8, %rbp
 adcq    %r9, %r15
@@ -981,9 +981,9 @@ adcq    %r12, %r10
 adcq    %r13, %r11
 adcq    %rax, %r14
 adcq    %rdi, %rdx
-   
+
 shld    $4, %r14, %rdx
-andq	mask60, %r14
+andq	mask60(%rip), %r14
 
 imul    $17, %rdx, %rdx
 addq    %rdx, %rbp
@@ -1004,39 +1004,39 @@ movq    %r14, 544(%rsp)
 
 // T1 <- T1 · T4
 xorq    %rdx, %rdx
-movq    608(%rsp), %rdx    
+movq    608(%rsp), %rdx
 
 mulx    440(%rsp), %r8, %r9
-mulx    448(%rsp), %rcx, %r10		
-adcx    %rcx, %r9 
+mulx    448(%rsp), %rcx, %r10
+adcx    %rcx, %r9
 
-mulx    456(%rsp), %rcx, %r11	
+mulx    456(%rsp), %rcx, %r11
 adcx    %rcx, %r10
 
-mulx    464(%rsp), %rcx, %r12	
+mulx    464(%rsp), %rcx, %r12
 adcx    %rcx, %r11
 
-mulx    472(%rsp), %rcx, %r13	
+mulx    472(%rsp), %rcx, %r13
 adcx    %rcx, %r12
 
-mulx    480(%rsp), %rcx, %r14	
+mulx    480(%rsp), %rcx, %r14
 adcx    %rcx, %r13
 
-mulx    488(%rsp), %rcx, %r15	
+mulx    488(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcq    $0, %r15
 
 xorq    %rsi, %rsi
 movq    616(%rsp), %rdx
-   
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r9
 adox    %rbp, %r10
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -1056,19 +1056,19 @@ adox    %rbp, %r15
 mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-adcq    $0, %rsi		
+adcq    $0, %rsi
 
 xorq    %rbx, %rbx
 movq    624(%rsp), %rdx
-    
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
@@ -1088,21 +1088,21 @@ adox    %rbp, %rsi
 mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
-adcq    $0, %rbx		
+adcq    $0, %rbx
 
 movq    %r10, 776(%rsp)
 
 xorq    %r10, %r10
 movq    632(%rsp), %rdx
-    
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
@@ -1121,22 +1121,22 @@ adox    %rbp, %rbx
 
 mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %rbx
-adox    %rbp, %r10		
-adcq    $0, %r10			
+adox    %rbp, %r10
+adcq    $0, %r10
 
 movq    %r11, 784(%rsp)
 
 xorq    %r11, %r11
 movq    640(%rsp), %rdx
-    
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
@@ -1155,20 +1155,20 @@ adox    %rbp, %r10
 
 mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
-adox    %rbp, %r11		
+adox    %rbp, %r11
 adcq    $0, %r11
 
 xorq    %rax, %rax
 movq    648(%rsp), %rdx
-    
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
@@ -1187,20 +1187,20 @@ adox    %rbp, %r11
 
 mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
-adox    %rbp, %rax			
+adox    %rbp, %rax
 adcq    $0, %rax
 
 xorq    %rdi, %rdi
 movq    656(%rsp), %rdx
-    
+
 mulx    440(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    448(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
@@ -1222,13 +1222,13 @@ adcx    %rcx, %rax
 adox    %rbp, %rdi
 adcq    $0, %rdi
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rbp, %rbp
-mulx    %r15, %rbp, %r15 
+mulx    %r15, %rbp, %r15
 
 mulx    %rsi,  %rcx, %rsi
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rbx, %rcx, %rbx
 adcx    %rcx, %rsi
@@ -1245,7 +1245,7 @@ adcx    %rcx, %r11
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %rax
 adcq    $0, %rdi
-  
+
 xorq    %rdx, %rdx
 addq    %r8, %rbp
 adcq    %r9, %r15
@@ -1255,9 +1255,9 @@ adcq    %r12, %r10
 adcq    %r13, %r11
 adcq    %rax, %r14
 adcq    %rdi, %rdx
-   
+
 shld    $4, %r14, %rdx
-andq	mask60, %r14
+andq	mask60(%rip), %r14
 
 imul    $17, %rdx, %rdx
 addq    %rdx, %rbp
@@ -1295,13 +1295,13 @@ movq    %r11, 480(%rsp)
 movq    %r14, 488(%rsp)
 
 // T2 <- T1 - T2
-addq    _4p0,   %r8
-adcq    _4p1_5, %r9
-adcq    _4p1_5, %r12
-adcq    _4p1_5, %r13
-adcq    _4p1_5, %rax
-adcq    _4p1_5, %rcx
-adcq    _4p6,   %rdx
+addq    _4p0(%rip),   %r8
+adcq    _4p1_5(%rip), %r9
+adcq    _4p1_5(%rip), %r12
+adcq    _4p1_5(%rip), %r13
+adcq    _4p1_5(%rip), %rax
+adcq    _4p1_5(%rip), %rcx
+adcq    _4p6(%rip),   %rdx
 
 subq    496(%rsp),  %r8
 sbbq    504(%rsp),  %r9
@@ -1322,7 +1322,7 @@ movq    %rdx, 544(%rsp)
 // X3 <- T1^2
 movq    440(%rsp), %rdx
 xorq    %r8, %r8
-    
+
 mulx    448(%rsp), %r9, %r10
 
 mulx    456(%rsp), %rcx, %r11
@@ -1340,10 +1340,10 @@ adcx    %rcx, %r13
 mulx    488(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcx    %r8, %r15
-    
+
 movq    448(%rsp), %rdx
 xorq    %rdi, %rdi
-    
+
 mulx    456(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -1364,7 +1364,7 @@ mulx    488(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %r8
 adcx    %rdi, %r8
-    
+
 movq    456(%rsp), %rdx
 xorq    %rbx, %rbx
 
@@ -1436,11 +1436,11 @@ shld    $1, %r12, %r13
 shld    $1, %rdx, %r12
 shld    $1, %r10, %rdx
 shld    $1, %r9,  %r10
-shlq    $1, %r9 
+shlq    $1, %r9
 
-movq    %rdx, 776(%rsp)		
+movq    %rdx, 776(%rsp)
 movq    %r12, 784(%rsp)
-	  
+
 xorq    %rdx, %rdx
 movq    440(%rsp), %rdx
 mulx    %rdx, %r12, %rax
@@ -1478,13 +1478,13 @@ mulx    %rdx, %rcx, %rax
 adcx    %rcx, %rsi
 adcx    %rax, %rbp
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rax, %rax
-mulx    %r15, %rax, %r15 
+mulx    %r15, %rax, %r15
 
 mulx    %r8,  %rcx, %r8
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %r8
@@ -1511,9 +1511,9 @@ adcq    784(%rsp), %rbx
 adcq    %r13, %r11
 adcq    %rsi, %r14
 adcq    %rdx, %rcx
-   
+
 shld    $4, %r14, %rcx
-andq    mask60, %r14
+andq    mask60(%rip), %r14
 
 imul    $17, %rcx, %rcx
 addq    %rcx, %rax
@@ -1527,7 +1527,7 @@ adcq    $0, %r14
 movq    432(%rsp), %rdx
 movq    16(%rdx), %rcx
 
-movq    %rax,  0(%rcx) // update X3
+movq    %rax,  0(%rcx); // update X3
 movq    %r15,  8(%rcx)
 movq    %r8,  16(%rcx)
 movq    %rdi, 24(%rcx)
@@ -1538,7 +1538,7 @@ movq    %r14, 48(%rcx)
 // T2 = T2^2
 movq    496(%rsp), %rdx
 xorq    %r8, %r8
-    
+
 mulx    504(%rsp), %r9, %r10
 
 mulx    512(%rsp), %rcx, %r11
@@ -1556,10 +1556,10 @@ adcx    %rcx, %r13
 mulx    544(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcx    %r8, %r15
-    
+
 movq    504(%rsp), %rdx
 xorq    %rdi, %rdi
-    
+
 mulx    512(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -1580,7 +1580,7 @@ mulx    544(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %r8
 adcx    %rdi, %r8
-    
+
 movq    512(%rsp), %rdx
 xorq    %rbx, %rbx
 
@@ -1652,11 +1652,11 @@ shld    $1, %r12, %r13
 shld    $1, %rdx, %r12
 shld    $1, %r10, %rdx
 shld    $1, %r9,  %r10
-shlq    $1, %r9 
+shlq    $1, %r9
 
-movq    %rdx, 776(%rsp)		
+movq    %rdx, 776(%rsp)
 movq    %r12, 784(%rsp)
-	  
+
 xorq    %rdx, %rdx
 movq    496(%rsp), %rdx
 mulx    %rdx, %r12, %rax
@@ -1694,13 +1694,13 @@ mulx    %rdx, %rcx, %rax
 adcx    %rcx, %rsi
 adcx    %rax, %rbp
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rax, %rax
-mulx    %r15, %rax, %r15 
+mulx    %r15, %rax, %r15
 
 mulx    %r8,  %rcx, %r8
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %r8
@@ -1727,9 +1727,9 @@ adcq    784(%rsp), %rbx
 adcq    %r13, %r11
 adcq    %rsi, %r14
 adcq    %rdx, %rcx
-   
+
 shld    $4, %r14, %rcx
-andq    mask60, %r14
+andq    mask60(%rip), %r14
 
 imul    $17, %rcx, %rcx
 addq    %rcx, %rax
@@ -1750,39 +1750,39 @@ movq    %r14, 544(%rsp)
 
 // Z3 <- T2 · X1
 xorq    %rdx, %rdx
-movq    496(%rsp), %rdx    
+movq    496(%rsp), %rdx
 
 mulx    72(%rsp), %r8, %r9
-mulx    80(%rsp), %rcx, %r10		
-adcx    %rcx, %r9 
+mulx    80(%rsp), %rcx, %r10
+adcx    %rcx, %r9
 
-mulx    88(%rsp), %rcx, %r11	
+mulx    88(%rsp), %rcx, %r11
 adcx    %rcx, %r10
 
-mulx    96(%rsp), %rcx, %r12	
+mulx    96(%rsp), %rcx, %r12
 adcx    %rcx, %r11
 
-mulx    104(%rsp), %rcx, %r13	
+mulx    104(%rsp), %rcx, %r13
 adcx    %rcx, %r12
 
-mulx    112(%rsp), %rcx, %r14	
+mulx    112(%rsp), %rcx, %r14
 adcx    %rcx, %r13
 
-mulx    120(%rsp), %rcx, %r15	
+mulx    120(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcq    $0, %r15
 
 xorq    %rsi, %rsi
 movq    504(%rsp), %rdx
-   
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r9
 adox    %rbp, %r10
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -1802,19 +1802,19 @@ adox    %rbp, %r15
 mulx    120(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-adcq    $0, %rsi		
+adcq    $0, %rsi
 
 xorq    %rbx, %rbx
 movq    512(%rsp), %rdx
-    
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
@@ -1834,21 +1834,21 @@ adox    %rbp, %rsi
 mulx    120(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
-adcq    $0, %rbx		
+adcq    $0, %rbx
 
 movq    %r10, 776(%rsp)
 
 xorq    %r10, %r10
 movq    520(%rsp), %rdx
-    
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
@@ -1867,22 +1867,22 @@ adox    %rbp, %rbx
 
 mulx    120(%rsp), %rcx, %rbp
 adcx    %rcx, %rbx
-adox    %rbp, %r10		
-adcq    $0, %r10			
+adox    %rbp, %r10
+adcq    $0, %r10
 
 movq    %r11, 784(%rsp)
 
 xorq    %r11, %r11
 movq    528(%rsp), %rdx
-    
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
@@ -1901,20 +1901,20 @@ adox    %rbp, %r10
 
 mulx    120(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
-adox    %rbp, %r11		
+adox    %rbp, %r11
 adcq    $0, %r11
 
 xorq    %rax, %rax
 movq    536(%rsp), %rdx
-    
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
@@ -1933,20 +1933,20 @@ adox    %rbp, %r11
 
 mulx    120(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
-adox    %rbp, %rax			
+adox    %rbp, %rax
 adcq    $0, %rax
 
 xorq    %rdi, %rdi
 movq    544(%rsp), %rdx
-    
+
 mulx    72(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    80(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-    
+
 mulx    88(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
@@ -1968,13 +1968,13 @@ adcx    %rcx, %rax
 adox    %rbp, %rdi
 adcq    $0, %rdi
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rbp, %rbp
-mulx    %r15, %rbp, %r15 
+mulx    %r15, %rbp, %r15
 
 mulx    %rsi,  %rcx, %rsi
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rbx, %rcx, %rbx
 adcx    %rcx, %rsi
@@ -1991,7 +1991,7 @@ adcx    %rcx, %r11
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %rax
 adcq    $0, %rdi
-  
+
 xorq    %rdx, %rdx
 addq    %r8, %rbp
 adcq    %r9, %r15
@@ -2001,9 +2001,9 @@ adcq    %r12, %r10
 adcq    %r13, %r11
 adcq    %rax, %r14
 adcq    %rdi, %rdx
-   
+
 shld    $4, %r14, %rdx
-andq	mask60, %r14
+andq	mask60(%rip), %r14
 
 imul    $17, %rdx, %rdx
 addq    %rdx, %rbp
@@ -2017,7 +2017,7 @@ adcq    $0, %r14
 movq    432(%rsp), %rdx
 movq    24(%rdx), %rcx
 
-movq    %rbp,  0(%rcx) // update Z3
+movq    %rbp,  0(%rcx) ;// update Z3
 movq    %r15,  8(%rcx)
 movq    %rsi, 16(%rcx)
 movq    %rbx, 24(%rcx)
@@ -2027,39 +2027,39 @@ movq    %r14, 48(%rcx)
 
 // X2 <- T5 · T6
 xorq    %rdx, %rdx
-movq    720(%rsp), %rdx    
+movq    720(%rsp), %rdx
 
 mulx    664(%rsp), %r8, %r9
-mulx    672(%rsp), %rcx, %r10		
-adcx    %rcx, %r9 
+mulx    672(%rsp), %rcx, %r10
+adcx    %rcx, %r9
 
-mulx    680(%rsp), %rcx, %r11	
+mulx    680(%rsp), %rcx, %r11
 adcx    %rcx, %r10
 
-mulx    688(%rsp), %rcx, %r12	
+mulx    688(%rsp), %rcx, %r12
 adcx    %rcx, %r11
 
-mulx    696(%rsp), %rcx, %r13	
+mulx    696(%rsp), %rcx, %r13
 adcx    %rcx, %r12
 
-mulx    704(%rsp), %rcx, %r14	
+mulx    704(%rsp), %rcx, %r14
 adcx    %rcx, %r13
 
-mulx    712(%rsp), %rcx, %r15	
+mulx    712(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcq    $0, %r15
 
 xorq    %rsi, %rsi
 movq    728(%rsp), %rdx
-   
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r9
 adox    %rbp, %r10
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -2079,19 +2079,19 @@ adox    %rbp, %r15
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-adcq    $0, %rsi		
+adcq    $0, %rsi
 
 xorq    %rbx, %rbx
 movq    736(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
@@ -2111,21 +2111,21 @@ adox    %rbp, %rsi
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
-adcq    $0, %rbx		
+adcq    $0, %rbx
 
 movq    %r10, 776(%rsp)
 
 xorq    %r10, %r10
 movq    744(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
@@ -2144,22 +2144,22 @@ adox    %rbp, %rbx
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %rbx
-adox    %rbp, %r10		
-adcq    $0, %r10			
+adox    %rbp, %r10
+adcq    $0, %r10
 
 movq    %r11, 784(%rsp)
 
 xorq    %r11, %r11
 movq    752(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
@@ -2178,20 +2178,20 @@ adox    %rbp, %r10
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
-adox    %rbp, %r11		
+adox    %rbp, %r11
 adcq    $0, %r11
 
 xorq    %rax, %rax
 movq    760(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
@@ -2210,20 +2210,20 @@ adox    %rbp, %r11
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
-adox    %rbp, %rax			
+adox    %rbp, %rax
 adcq    $0, %rax
 
 xorq    %rdi, %rdi
 movq    768(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
@@ -2245,13 +2245,13 @@ adcx    %rcx, %rax
 adox    %rbp, %rdi
 adcq    $0, %rdi
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rbp, %rbp
-mulx    %r15, %rbp, %r15 
+mulx    %r15, %rbp, %r15
 
 mulx    %rsi,  %rcx, %rsi
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rbx, %rcx, %rbx
 adcx    %rcx, %rsi
@@ -2268,7 +2268,7 @@ adcx    %rcx, %r11
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %rax
 adcq    $0, %rdi
-  
+
 xorq    %rdx, %rdx
 addq    %r8, %rbp
 adcq    %r9, %r15
@@ -2278,9 +2278,9 @@ adcq    %r12, %r10
 adcq    %r13, %r11
 adcq    %rax, %r14
 adcq    %rdi, %rdx
-   
+
 shld    $4, %r14, %rdx
-andq	mask60, %r14
+andq	mask60(%rip), %r14
 
 imul    $17, %rdx, %rdx
 addq    %rdx, %rbp
@@ -2294,7 +2294,7 @@ adcq    $0, %r14
 movq    432(%rsp), %rdx
 movq    0(%rdx), %rcx
 
-movq    %rbp,  0(%rcx) // update X2
+movq    %rbp,  0(%rcx); // update X2
 movq    %r15,  8(%rcx)
 movq    %rsi, 16(%rcx)
 movq    %rbx, 24(%rcx)
@@ -2306,18 +2306,18 @@ movq    %r14, 48(%rcx)
 movq    664(%rsp),  %r8
 movq    672(%rsp),  %r9
 movq    680(%rsp), %r10
-movq    688(%rsp), %r11 
+movq    688(%rsp), %r11
 movq    696(%rsp), %r12
 movq    704(%rsp), %r13
 movq    712(%rsp), %r14
 
-addq    _4p0,    %r8
-adcq    _4p1_5,  %r9
-adcq    _4p1_5, %r10
-adcq    _4p1_5, %r11
-adcq    _4p1_5, %r12
-adcq    _4p1_5, %r13
-adcq    _4p6,   %r14
+addq    _4p0(%rip),    %r8
+adcq    _4p1_5(%rip),  %r9
+adcq    _4p1_5(%rip), %r10
+adcq    _4p1_5(%rip), %r11
+adcq    _4p1_5(%rip), %r12
+adcq    _4p1_5(%rip), %r13
+adcq    _4p6(%rip),   %r14
 
 subq    720(%rsp),  %r8
 sbbq    728(%rsp),  %r9
@@ -2337,7 +2337,7 @@ movq    %r14, 712(%rsp)
 
 // T1 <- ((A + 2)/4) · T5
 xorq    %rdx, %rdx
-movq    a24, %rdx
+movq    a24(%rip), %rdx
 
 mulx    %r8, %rsi, %rdi
 mulx    %r9, %rcx, %rbp
@@ -2356,11 +2356,11 @@ mulx    %r13, %rcx, %r11
 adcx    %rcx, %r10
 
 mulx    %r14, %rcx, %r12
-adcx    %rcx, %r11	
+adcx    %rcx, %r11
 adcq    $0, %r12
 
 shld    $4, %r11, %r12
-andq    mask60, %r11
+andq    mask60(%rip), %r11
 
 imul    $17, %r12, %r12
 addq    %r12, %rsi
@@ -2380,7 +2380,7 @@ adcq    752(%rsp),  %r9
 adcq    760(%rsp), %r10
 adcq    768(%rsp), %r11
 
-movq    %rsi, 720(%rsp) 
+movq    %rsi, 720(%rsp)
 movq    %rdi, 728(%rsp)
 movq    %rbp, 736(%rsp)
 movq    %r8,  744(%rsp)
@@ -2390,39 +2390,39 @@ movq    %r11, 768(%rsp)
 
 // Z2 <- T5 · T6
 xorq    %rdx, %rdx
-movq    720(%rsp), %rdx    
+movq    720(%rsp), %rdx
 
 mulx    664(%rsp), %r8, %r9
-mulx    672(%rsp), %rcx, %r10		
-adcx    %rcx, %r9 
+mulx    672(%rsp), %rcx, %r10
+adcx    %rcx, %r9
 
-mulx    680(%rsp), %rcx, %r11	
+mulx    680(%rsp), %rcx, %r11
 adcx    %rcx, %r10
 
-mulx    688(%rsp), %rcx, %r12	
+mulx    688(%rsp), %rcx, %r12
 adcx    %rcx, %r11
 
-mulx    696(%rsp), %rcx, %r13	
+mulx    696(%rsp), %rcx, %r13
 adcx    %rcx, %r12
 
-mulx    704(%rsp), %rcx, %r14	
+mulx    704(%rsp), %rcx, %r14
 adcx    %rcx, %r13
 
-mulx    712(%rsp), %rcx, %r15	
+mulx    712(%rsp), %rcx, %r15
 adcx    %rcx, %r14
 adcq    $0, %r15
 
 xorq    %rsi, %rsi
 movq    728(%rsp), %rdx
-   
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r9
 adox    %rbp, %r10
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
@@ -2442,19 +2442,19 @@ adox    %rbp, %r15
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-adcq    $0, %rsi		
+adcq    $0, %rsi
 
 xorq    %rbx, %rbx
 movq    736(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
 adox    %rbp, %r11
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
@@ -2474,21 +2474,21 @@ adox    %rbp, %rsi
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
-adcq    $0, %rbx		
+adcq    $0, %rbx
 
 movq    %r10, 776(%rsp)
 
 xorq    %r10, %r10
 movq    744(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
 adox    %rbp, %r12
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
@@ -2507,22 +2507,22 @@ adox    %rbp, %rbx
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %rbx
-adox    %rbp, %r10		
-adcq    $0, %r10			
+adox    %rbp, %r10
+adcq    $0, %r10
 
 movq    %r11, 784(%rsp)
 
 xorq    %r11, %r11
 movq    752(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r12
 adox    %rbp, %r13
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
@@ -2541,20 +2541,20 @@ adox    %rbp, %r10
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r10
-adox    %rbp, %r11		
+adox    %rbp, %r11
 adcq    $0, %r11
 
 xorq    %rax, %rax
 movq    760(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r13
 adox    %rbp, %r14
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
@@ -2573,20 +2573,20 @@ adox    %rbp, %r11
 
 mulx    712(%rsp), %rcx, %rbp
 adcx    %rcx, %r11
-adox    %rbp, %rax			
+adox    %rbp, %rax
 adcq    $0, %rax
 
 xorq    %rdi, %rdi
 movq    768(%rsp), %rdx
-    
+
 mulx    664(%rsp), %rcx, %rbp
 adcx    %rcx, %r14
 adox    %rbp, %r15
-    
+
 mulx    672(%rsp), %rcx, %rbp
 adcx    %rcx, %r15
 adox    %rbp, %rsi
-    
+
 mulx    680(%rsp), %rcx, %rbp
 adcx    %rcx, %rsi
 adox    %rbp, %rbx
@@ -2608,13 +2608,13 @@ adcx    %rcx, %rax
 adox    %rbp, %rdi
 adcq    $0, %rdi
 
-movq    $272, %rdx    		
+movq    $272, %rdx
 
 xorq    %rbp, %rbp
-mulx    %r15, %rbp, %r15 
+mulx    %r15, %rbp, %r15
 
 mulx    %rsi,  %rcx, %rsi
-adcx    %rcx, %r15     
+adcx    %rcx, %r15
 
 mulx    %rbx, %rcx, %rbx
 adcx    %rcx, %rsi
@@ -2631,7 +2631,7 @@ adcx    %rcx, %r11
 mulx    %rdi, %rcx, %rdi
 adcx    %rcx, %rax
 adcq    $0, %rdi
-  
+
 xorq    %rdx, %rdx
 addq    %r8, %rbp
 adcq    %r9, %r15
@@ -2641,9 +2641,9 @@ adcq    %r12, %r10
 adcq    %r13, %r11
 adcq    %rax, %r14
 adcq    %rdi, %rdx
-   
+
 shld    $4, %r14, %rdx
-andq	mask60, %r14
+andq	mask60(%rip), %r14
 
 imul    $17, %rdx, %rdx
 addq    %rdx, %rbp
@@ -2657,7 +2657,7 @@ adcq    $0, %r14
 movq    432(%rsp), %rdx
 movq    8(%rdx), %rcx
 
-movq    %rbp,  0(%rcx) // update Z2
+movq    %rbp,  0(%rcx); // update Z2
 movq    %r15,  8(%rcx)
 movq    %rsi, 16(%rcx)
 movq    %rbx, 24(%rcx)
@@ -2684,7 +2684,7 @@ movq    56(%rsp), %rdi
 movq    432(%rsp), %rdx
 movq    0(%rdx), %rcx
 
-movq     0(%rcx),  %r8 
+movq     0(%rcx),  %r8
 movq     8(%rcx),  %r9
 movq    16(%rcx), %r10
 movq    24(%rcx), %r11
@@ -2692,7 +2692,7 @@ movq    32(%rcx), %r12
 movq    40(%rcx), %r13
 movq    48(%rcx), %r14
 
-movq    %r8,   0(%rdi) // final value of X2
+movq    %r8,   0(%rdi); // final value of X2
 movq    %r9,   8(%rdi)
 movq    %r10, 16(%rdi)
 movq    %r11, 24(%rdi)
@@ -2702,7 +2702,7 @@ movq    %r14, 48(%rdi)
 
 movq    8(%rdx), %rcx
 
-movq     0(%rcx),  %r8 
+movq     0(%rcx),  %r8
 movq     8(%rcx),  %r9
 movq    16(%rcx), %r10
 movq    24(%rcx), %r11
@@ -2710,7 +2710,7 @@ movq    32(%rcx), %r12
 movq    40(%rcx), %r13
 movq    48(%rcx), %r14
 
-movq    %r8,  56(%rdi) // final value of Z2
+movq    %r8,  56(%rdi); // final value of Z2
 movq    %r9,  64(%rdi)
 movq    %r10, 72(%rdi)
 movq    %r11, 80(%rdi)

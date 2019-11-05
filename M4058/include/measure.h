@@ -14,10 +14,10 @@ int comp(const void *, const void *);
 void median_next(unsigned);
 extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 
-#define CACHE_WARM_ITER 25000
-#define MAX_ITER 100000
-#define M 1000
-#define N 1000
+#define CACHE_WARM_ITER 250
+#define MAX_ITER 1000
+#define M 100
+#define N 10
 
 #define STAMP ({unsigned res; __asm__ __volatile__ ("rdtsc" : "=a"(res) : : "edx"); res;}) /* Time stamp */
 
@@ -54,15 +54,15 @@ unsigned get_median(void) {
 }
 
 
-int comp(const void *x, const void *y) { 
+int comp(const void *x, const void *y) {
 
-	return *(unsigned *)x - *(unsigned *)y; 
+	return *(unsigned *)x - *(unsigned *)y;
 }
 
-	
-void median_next(unsigned x) { 
 
-	values[num_values++] = x; 
+void median_next(unsigned x) {
+
+	values[num_values++] = x;
 }
 
 

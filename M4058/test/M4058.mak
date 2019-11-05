@@ -30,23 +30,23 @@
 #| NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,   |
 #| DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY       |
 #| THEORY LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING |
-#| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,| 
+#| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,|
 #| EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                          |
 #+-----------------------------------------------------------------------------+
 #
 
 INCDRS = -I../include/
 
-SRCFLS = ../source/M4058_const.S 		\
-	 ../source/M4058_ladder.S		\
-	 ../source/gf_p44417_mul.S 		\
-	 ../source/gf_p44417_nsqr.S 		\
+SRCFLS = ../source/M4058_const.s 		\
+	 ../source/M4058_ladder.s		\
+	 ../source/gf_p44417_mul.s 		\
+	 ../source/gf_p44417_nsqr.s 		\
 	 ../source/gf_p44417_inv.c 		\
 	 ../source/gf_p44417_makeunique.c 	\
 	 ../source/M4058_smult.c		\
 	 ../source/gf_p44417_pack.c		\
 	  ./M4058_test.c
-         
+
 OBJFLS = ../source/M4058_const.o 		\
 	 ../source/M4058_ladder.o		\
 	 ../source/gf_p44417_mul.o 		\
@@ -60,12 +60,12 @@ OBJFLS = ../source/M4058_const.o 		\
 EXE    = M4058_test
 
 CFLAGS = -march=skylake -mtune=skylake -m64 -O3 -funroll-loops -fomit-frame-pointer
-
+AS     = as
 CC     = gcc
-LL     = gcc
+LD     = gcc
 
 $(EXE): $(OBJFLS)
-	$(LL) -o $@ $(OBJFLS) -lm
+	$(LD) -o $@ $(OBJFLS) -lm
 
 .c.o:
 	$(CC) $(INCDRS) $(CFLAGS) -o $@ -c $<
