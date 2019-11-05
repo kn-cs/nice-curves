@@ -31,24 +31,139 @@
 | NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,   |
 | DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY       |
 | THEORY LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING |
-| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,| 
+| NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE,|
 | EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.                          |
 +-----------------------------------------------------------------------------+
 */
 
-.data
+.p2align 5
+.globl gfp2519nsqr
+gfp2519nsqr:
 
-.globl mask60
-.globl a24
-.globl _4p0
-.globl _4p1_5
-.globl _4p6
+push    %rbp
+push    %rbx
+push    %r12
+push    %r13
+push    %r14
+push    %r15
+push    %rdi
 
-.p2align 4
+movq    0(%rsi),  %rbx
+movq    8(%rsi),  %rbp
+movq    16(%rsi), %rax
+movq    24(%rsi), %rsi
 
-mask60	: .quad 0x0FFFFFFFFFFFFFFF
-a24	: .quad 1015
-_4p0	: .quad 0xFFFFFFFFFFFFFFBC
-_4p1_5	: .quad 0xFFFFFFFFFFFFFFFF
-_4p6	: .quad 0x3FFFFFFFFFFFFFFF
+movq    %rdx, %rdi
 
+.START:
+
+subq    $1, %rdi
+
+movq    %rbx, %rdx
+xorq    %r13, %r13
+
+mulx    %rbp, %r9, %r10
+
+mulx    %rax, %rcx, %r11
+adcx    %rcx, %r10
+
+mulx    %rsi, %rcx, %r12
+adcx    %rcx, %r11
+adcx    %r13, %r12
+
+movq    %rbp, %rdx
+xorq    %r14, %r14
+
+mulx    %rax, %rcx, %rdx
+adcx    %rcx, %r11
+adox    %rdx, %r12
+
+movq    %rbp, %rdx
+mulx    %rsi, %rcx, %rdx
+adcx    %rcx, %r12
+adox    %rdx, %r13
+adcx    %r14, %r13
+
+movq    %rax, %rdx
+xorq    %r15, %r15
+
+mulx    %rsi, %rcx, %r14
+adcx    %rcx, %r13
+adcx    %r15, %r14
+
+shld    $1, %r14, %r15
+shld    $1, %r13, %r14
+shld    $1, %r12, %r13
+shld    $1, %r11, %r12
+shld    $1, %r10, %r11
+shld    $1, %r9, %r10
+addq    %r9, %r9
+
+xorq    %rdx, %rdx
+movq    %rbx, %rdx
+mulx    %rdx, %r8, %rdx
+adcx    %rdx, %r9
+
+movq    %rbp, %rdx
+mulx    %rdx, %rcx, %rdx
+adcx    %rcx, %r10
+adcx    %rdx, %r11
+
+movq    %rax, %rdx
+mulx    %rdx, %rcx, %rdx
+adcx    %rcx, %r12
+adcx    %rdx, %r13
+
+movq    %rsi, %rdx
+mulx    %rdx, %rcx, %rdx
+adcx    %rcx, %r14
+adcx    %rdx, %r15
+
+xorq    %rbp, %rbp
+movq    $288, %rdx
+
+mulx    %r12, %rbx, %rbp
+adcx    %r8, %rbx
+adox    %r9, %rbp
+
+mulx    %r13, %rcx, %rax
+adcx    %rcx, %rbp
+adox    %r10, %rax
+
+mulx    %r14, %rcx, %rsi
+adcx    %rcx, %rax
+adox    %r11, %rsi
+
+mulx    %r15, %rcx, %r15
+adcx    %rcx, %rsi
+adox    zero(%rip), %r15
+adcx    zero(%rip), %r15
+
+shld    $5, %rsi, %r15
+andq    mask59(%rip), %rsi
+
+imul    $9, %r15, %r15
+addq    %r15, %rbx
+adcq    $0, %rbp
+adcq    $0, %rax
+adcq    $0, %rsi
+
+cmpq    $0, %rdi
+
+jne .START
+
+pop     %rdi
+
+movq    %rbx,  0(%rdi)
+movq    %rbp,  8(%rdi)
+movq    %rax, 16(%rdi)
+movq    %rsi, 24(%rdi)
+
+pop     %r15
+pop     %r14
+pop     %r13
+pop     %r12
+pop     %rbx
+pop     %rbp
+
+ret
