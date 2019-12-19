@@ -65,7 +65,7 @@ CC     = gcc
 LL     = gcc
 
 $(EXE): $(OBJFLS)
-	$(LL) -o $@ $(OBJFLS) -lm
+	$(LL) -o $@ $(OBJFLS) -lm -no-pie
 
 .c.o:
 	$(CC) $(INCDRS) $(CFLAGS) -o $@ -c $<
