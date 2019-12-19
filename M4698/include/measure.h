@@ -14,6 +14,8 @@ int comp(const void *, const void *);
 void median_next(unsigned);
 extern void qsort(void *, size_t, size_t, int (*)(const void *, const void *));
 
+//#define CACHE_WARM_ITER 1000
+//#define MAX_ITER 2000
 #define CACHE_WARM_ITER 25000
 #define MAX_ITER 100000
 #define M 1000
