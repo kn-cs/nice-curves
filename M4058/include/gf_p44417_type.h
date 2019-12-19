@@ -42,6 +42,8 @@
 #define NLIMBS 7
 #define LIMB0 0xFFFFFFFFFFFFFFEF
 
+#include "basic_types.h"
+
 typedef struct {
   uint64 l[NLIMBS]; 
 }
