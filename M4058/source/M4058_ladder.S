@@ -1574,7 +1574,7 @@ movb    %cl, 354(%rsp)
 
 cmpb    $1, %bl
 
-// cselect(T1,T2,T3,T4,swap)
+// CSelect(T1,T2,T3,T4,swap)
 movq    368(%rsp), %r8
 movq    376(%rsp), %r9
 movq    384(%rsp), %r10
