@@ -26,7 +26,7 @@ To report a bug or make a comment regarding the implementations please drop a ma
 
 * **intel64-avx2-4x1-9limb**: 9-limb 4-way vectorized assembly implementations using Algorithms 7, 8 and 9 of [Efficient 4-way Vectorizations of the Montgomery Ladder](https://eprint.iacr.org/2020/378.pdf).
 
-* **portable-c**: 5-limb 64-bit high-level implementation using only C
+* **portable-c**: 5-limb 64-bit high-level implementation using only C.
 
 
 
